@@ -76,13 +76,15 @@ const CreateAccount = (props) => {
 							className="modal-input" onBlur={updateInput} name="password" labelAnimation="up" 
 							barAnimation="solid" labelText="Password" wType="outlined" inputType="password" 
 						/>
-						<WButton className="modal-button" onClick={handleCreateAccount} span clickAnimation="ripple-light" hoverAnimation="darken" shape="rounded" color="primary">
-							Submit
-						</WButton>
-						<WButton className="cancel-button" onClick={() => {setVisible(false); props.setShowCreate(false)}} span clickAnimation="ripple-light" hoverAnimation="darken" shape="rounded" color="danger">
-							Close
-						</WButton>
 				</WMMain>
+				<WMFooter>
+					<WButton className="modal-button" onClick={handleCreateAccount} span clickAnimation="ripple-light" hoverAnimation="darken" shape="rounded" color="primary">
+						Submit
+					</WButton>
+					<WButton className="cancel-button" onClick={() => {setVisible(false); props.setShowCreate(false)}} span clickAnimation="ripple-light" hoverAnimation="darken" shape="rounded" color="danger">
+						Close
+					</WButton>
+				</WMFooter>
 			</WModal>
 		</div>
 		// <div className="signup-modal">
