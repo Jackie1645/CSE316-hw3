@@ -80,6 +80,7 @@ html {
 }
 
 .table-header-buttons {
+    width: 100%;
     float: right;
     height: 100%;
     display: flex;
@@ -114,6 +115,7 @@ html {
 
 .sidebar-options {
     height: 100%;
+    margin-left: 60px;
     display: flex;
     align-items: center;
     column-gap: 0.5rem;

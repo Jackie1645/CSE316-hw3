@@ -27,6 +27,12 @@ const TableHeader = (props) => {
 
             <WCol size="3">
                 <div className="table-header-buttons">
+                    <WButton className="undo-redo" onClick={props.undo} wType="texted" clickAnimation="ripple-light" shape="rounded">
+                        <i className="material-icons" style={{color: props.canUndo() ? "" : "rgb(97, 97, 97)"}}>undo</i>
+                    </WButton>
+                    <WButton className="undo-redo" onClick={props.redo} wType="texted" clickAnimation="ripple-light" shape="rounded">
+                        <i className="material-icons" style={{color: props.canRedo() ? "" : "rgb(97, 97, 97)"}}>redo</i>
+                    </WButton>
                     <WButton onClick={props.disabled ? clickDisabled : props.addItem} wType="texted" className={`${buttonStyle}`}>
                         <i className="material-icons">add_box</i>
                     </WButton>

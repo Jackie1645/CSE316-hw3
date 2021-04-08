@@ -233,6 +233,9 @@ const Homescreen = (props) => {
 									setShowDelete={setShowDelete}
 									activeList={activeList} setActiveList={setActiveList}
 									clear={() => props.tps.clearAllTransactions()}
+									undo={tpsUndo} redo={tpsRedo}
+									canUndo={() => props.tps.hasTransactionToUndo()}
+									canRedo={() => props.tps.hasTransactionToRedo()}
 								/>
 							</div>
 						:
