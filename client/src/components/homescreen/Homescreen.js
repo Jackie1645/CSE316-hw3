@@ -79,7 +79,7 @@ const Homescreen = (props) => {
 			id: lastID,
 			description: 'No Description',
 			due_date: 'No Date',
-			assigned_to: props.user._id,
+			assigned_to: 'No User',
 			completed: false
 		};
 		let opcode = 1;
@@ -112,6 +112,9 @@ const Homescreen = (props) => {
 		let flag = 0;
 		if (field === 'completed') flag = 1;
 		let listID = activeList._id;
+		let item = activeList.items.find(todo => todo._id === itemID)[field];
+		if (item === value) return;
+		if (item === ("complete" === value)) return;
 		let transaction = new EditItem_Transaction(listID, itemID, field, prev, value, flag, UpdateTodoItemField);
 		props.tps.addTransaction(transaction);
 		tpsRedo();

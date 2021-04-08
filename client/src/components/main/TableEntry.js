@@ -5,13 +5,17 @@ const TableEntry = (props) => {
     const { data } = props;
 
     const completeStyle = data.completed ? ' complete-task' : ' incomplete-task';
+    const ownerStyle = data.completed ? ' owned' : ' unowned'
 
     const description = data.description;
     const due_date = data.due_date;
     const status = data.completed ? 'complete' : 'incomplete';
+    const owner = data.assigned_to;
+    
     const [editingDate, toggleDateEdit] = useState(false);
     const [editingDescr, toggleDescrEdit] = useState(false);
     const [editingStatus, toggleStatusEdit] = useState(false);
+    const [editingOwner, toggleOwnerEdit] = useState(false);
 
     const handleDateEdit = (e) => {
         toggleDateEdit(false);
@@ -34,9 +38,16 @@ const TableEntry = (props) => {
         props.editItem(data._id, 'completed', newStatus, prevStatus);
     };
 
+    const handleOwnerEdit = (e) => {
+        toggleOwnerEdit(false);
+        const newOwner = e.target.value ? e.target.value : 'No Owner';
+        const prevOwner = owner;
+        props.editItem(data._id, 'assigned_to', newOwner, prevOwner);
+    }
+
     return (
         <WRow className='table-entry'>
-            <WCol size="4">
+            <WCol size="3">
                 {
                     editingDescr || description === ''
                         ? <WInput
@@ -51,7 +62,7 @@ const TableEntry = (props) => {
                 }
             </WCol>
 
-            <WCol size="3">
+            <WCol size="2">
                 {
                     editingDate ? <input
                         className='table-input' onBlur={handleDateEdit}
@@ -78,6 +89,21 @@ const TableEntry = (props) => {
                             {status}
                         </div>
                 }
+            </WCol>
+            <WCol size="2"> 
+                {
+                    editingOwner || owner === ''
+                    ? <WInput
+                        className='table-input' onBlur={handleOwnerEdit}
+                        autoFocus={true} defaultValue={owner} type='text'
+                        wType="outlined" barAnimation="solid" inputClass="table-input-class"
+                    />
+                    : <div className={`${ownerStyle} table-text`}
+                        onClick={() => toggleOwnerEdit(!editingOwner)} 
+                    >{owner}
+                    </div>
+                }
+
             </WCol>
 
             <WCol size="3">
