@@ -140,7 +140,11 @@ const Homescreen = (props) => {
 			items: [],
 		}
 		const { data } = await AddTodolist({ variables: { todolist: list }, refetchQueries: [{ query: GET_DB_TODOS }] });
-		setActiveList(list)
+		await refetchTodos(refetch);
+			if(data) {
+			let _id = data.addTodolist;
+			handleSetActive(_id);
+			} 
 	};
 
 	const deleteList = async (_id) => {
@@ -185,9 +189,37 @@ const Homescreen = (props) => {
 		toggleShowLogin(false);
 		toggleShowDelete(!showDelete)
 	}
+	/* *
+     * Handles undo and redo through keyboard presses
+     * @param {KeyboardEvent} ev a KeyboardDown event
+     */
+    const handleKeypressTransaction = async(ev) => {
+        let platform = window.navigator.platform;
+        let mac = platform.toLowerCase().indexOf('mac') >= 0;
+        if (mac) {
+            if (ev.key.toLowerCase() === 'z' && ev.metaKey && !ev.shiftKey && !ev.repeat){
+                console.log('1')
+                if (props.tps.hasTransactionToUndo()) await tpsUndo();
+            }
+            else if (ev.key.toLowerCase() == 'z' && ev.metaKey && ev.shiftKey && !ev.repeat) {
+                console.log('2')
+
+                if (props.tps.hasTransactionToRedo()) await tpsRedo();
+            }
+        }else{
+            if (ev.key.toLowerCase() == 'z' && ev.ctrlKey) {
+                console.log('3')
+                if (props.tps.hasTransactionToUndo()) await tpsUndo();
+            }
+            else if (ev.key.toLowerCase() == 'y' && ev.ctrlKey) {
+                console.log('4')
+                if (props.tps.hasTransactionToRedo()) await tpsRedo();
+            }
+        }
+    }
 
 	return (
-		<WLayout wLayout="header-lside">
+		<WLayout tabIndex={0} wLayout="header-lside" onKeyDown={handleKeypressTransaction}>
 			<WLHeader>
 				<WNavbar color="colored">
 					<ul>
